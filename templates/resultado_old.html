@@ -1,0 +1,197 @@
+<h2 style="text-align:center"><strong><br>RESULTADO</strong></h2>
+<p style="text-align:center; visibility: hidden">{{pp}}</p>
+
+<!-- <p style="text-align:center">SITE: https://editorhtmlonline.clevert.com.br/html.php</p> -->
+
+<h2 style="text-align: center;">IDENTIFICAÇÃO</h2>
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px">
+	<tbody>
+		<tr>
+			<td><b>Nome:</b> {{dados["nome"]}}</td>
+		</tr>
+		<tr>
+			<td><b>DN:</b> {{dados["nascimento"]}}</td>
+		</tr>
+		<tr>
+			<td><b>Data de Avalia&ccedil;&atilde;o:</b> {{dados["data_apli"]}}</td>
+		</tr>
+		<tr>
+			<td><b>Idade no momento da aplicação:</b> {{pp['anos_meses']}}</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<h2 style="text-align: center;">Subtestes<h2>
+
+<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px">
+	<thead>
+		<tr>
+			<th scope="col">Subteste</th>
+      <th scope="col">Pontos Brutos</th>
+			<th scope="col">Pontos Ponderados</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cubos (CB)</td>
+      <td>{{dados["CB"]}}</td>
+			<td>{{pp["CB"]}}</td>
+		</tr>
+		<tr>
+			<td>Semelhan&ccedil;as (SM)</td>
+      <td>{{dados["SM"]}}</td>
+			<td>{{pp["SM"]}}</td>
+		</tr>
+		<tr>
+			<td>D&iacute;gitos (DG)</td>
+      <td>{{dados["DG"]}}</td>
+			<td>{{pp["DG"]}}</td>
+		</tr>
+		<tr>
+			<td> Conceitos Figurativos(CN)</td>
+      <td>{{dados["CN"]}}</td>
+			<td>{{pp["CN"]}}</td>
+		</tr>
+		<tr>
+			<td>C&oacute;digo (CD)</td>
+      <td>{{dados["CD"]}}</td>
+			<td>{{pp["CD"]}}</td>
+		</tr>
+		<tr>
+			<td>Vocabul&aacute;rio (VC)</td>
+      <td>{{dados["VC"]}}</td>
+			<td>{{pp["VC"]}}</td>
+		</tr>
+		<tr>
+			<td>Seq de Num e Letras (SNL)</td>
+      <td>{{dados["SNL"]}}</td>
+			<td>{{pp["SNL"]}}</td>
+		</tr>
+		<tr>
+			<td>Raciocinio Matricial (RM)</td>
+      <td>{{dados["RM"]}}</td>
+			<td>{{pp["RM"]}}</td>
+		</tr>
+		<tr>
+			<td>Comprees&atilde;oo (CO)</td>
+      <td>{{dados["CO"]}}</td>
+			<td>{{pp["CO"]}}</td>
+		</tr>
+		<tr>
+			<td>Procurar S&iacute;mbolos (PS)</td>
+      <td>{{dados["PS"]}}</td>
+			<td>{{pp["PS"]}}</td>
+		</tr>
+		<tr>
+			<td>(Completar Figuras) (CF)</td>
+      <td>{{dados["CF"]}}</td>
+			<td>{{pp["CF"]}}</td>
+		</tr>
+		<tr>
+			<td>(Cancelamento) (CA)</td>
+      <td>{{dados["CA"]}}</td>
+			<td>{{pp["CA"]}}</td>
+		</tr>
+		<tr>
+			<td>(Informa&ccedil;&atilde;o) (IN)</td>
+      <td>{{dados["IN"]}}</td>
+			<td>{{pp["IN"]}}</td>
+		</tr>
+		<tr>
+			<td>(Aritim&eacute;tica) (AR)</td>
+      <td>{{dados["AR"]}}</td>
+			<td>{{pp["AR"]}}</td>
+		</tr>
+		<tr>
+			<td>(Racic&iacute;nio com Palavras) (RP)</td>
+      <td>{{dados["RP"]}}</td>
+			<td>{{pp["RP"]}}</td>
+		</tr>
+		<tr>
+			<td><strong>Soma dos Pontos Ponderados:</strong></td>
+      <td></td>
+			<td><strong>{{pp["total"]}}</strong></td>
+		</tr>
+	</tbody>
+</table>
+
+<h2 style="text-align:center">Soma dos Pontos Ponderados</h2>
+
+<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px">
+	<tbody>
+		<tr>
+			<td style="text-align:center"><strong>ICV</strong></td>
+			<td style="text-align: center;">&nbsp;{{pp["ICV"]}}</td>
+		</tr>
+		<tr>
+			<td style="text-align:center"><strong>IOP</strong></td>
+			<td style="text-align: center;">&nbsp;{{pp["IOP"]}}</td>
+		</tr>
+		<tr>
+			<td style="text-align:center"><strong>IMO</strong></td>
+			<td style="text-align: center;">&nbsp;{{pp["IMO"]}}</td>
+		</tr>
+		<tr>
+			<td style="text-align:center"><strong>IVP</strong></td>
+			<td style="text-align: center;">&nbsp;{{pp["IVP"]}}</td>
+		</tr>
+		<tr>
+			<td style="text-align:center"><strong>QIT</strong></td>
+			<td style="text-align: center;">&nbsp;{{pp["total"]}}</td>
+		</tr>
+	</tbody>
+</table>
+
+<h2 style="text-align:center">Conv. da Soma dos Pontos Ponderados em Ponto Composto</h2>
+
+
+<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px">
+	<tbody>
+		<thead>
+			<th>Escala</th>
+            <th>Soma dos PP</th>
+            <th>Ponto Composto</th>
+            <th>Rank Percentil</th>
+            <th>Intervalo de Confian&ccedil;a 95%</th>
+		</thead>
+		<tr>
+			<td>Compreens&atilde;o Verbal</td>
+			<td>&nbsp;{{pp["ICV"]}}</td>
+			<td>&nbsp;{{"ICV " + pp['pc']['pc_icv']['ICV']}}</td>
+			<td>&nbsp;{{pp['pc']['pc_icv']['rank_p']}}</td>
+			<td>&nbsp;{{pp['pc']['pc_icv']['nc95']}}</td>
+		</tr>
+		<tr>
+			<td>Organiza&ccedil;&atilde;o Percentual</td>
+			<td>&nbsp;{{pp["IOP"]}}</td>
+			<td>&nbsp;{{"IOP " + pp['pc']['pc_iop']['IOP']}}</td>
+			<td>&nbsp;{{pp['pc']['pc_iop']['rank_p']}}</td>
+			<td>&nbsp;{{pp['pc']['pc_iop']['nc95']}}</td>
+		</tr>
+		<tr>
+			<td>Mem&oacute;ria Operacional</td>
+			<td>&nbsp;{{pp["IMO"]}}</td>
+			<td>&nbsp;{{"IMO " + pp['pc']['pc_imo']['IMO']}}</td>
+			<td>&nbsp;{{pp['pc']['pc_imo']['rank_p']}}</td>
+			<td>&nbsp;{{pp['pc']['pc_imo']['nc95']}}</td>
+		</tr>
+		<tr>
+			<td>Velocidade de Processamento</td>
+			<td>&nbsp;{{pp["IVP"]}}</td>
+			<td>&nbsp;{{"IVP " + pp['pc']['pc_ivp']['IVP']}}</td>
+            <td>&nbsp;{{pp['pc']['pc_ivp']['rank_p']}}</td>
+            <td>&nbsp;{{pp['pc']['pc_ivp']['nc95']}}</td>
+		</tr>
+		<tr>
+			<td>QI Total</td>
+			<td>&nbsp;{{pp["total"]}}</td>
+			<td>&nbsp;{{"QIT " + pp['pc']['pc_qit']['QIT']}}</td>
+            <td>&nbsp;{{pp['pc']['pc_qit']['rank_p']}}</td>
+            <td>&nbsp;{{pp['pc']['pc_qit']['nc95']}}</td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:center">&nbsp;</p>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Teste WISC-IV</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 700px; margin: auto; }
+    label { display: block; margin: 10px 0 5px; }
+    input[type="number"] { width: 60px; }
+  </style>
+</head>
+<body>
+
+<h2>Informações do Paciente</h2>
+
+<form id="form-wisc">
+
+  <!-- Campos de entrada (Nome, Data de nascimento, Data de aplicação) -->
+  <label>Nome do paciente:
+    <input type="text" id="nome" name="nome" value="João" required>
+  </label>
+
+  <label>Data de nascimento:
+    <input type="date" id="nascimento" name="nascimento" value="2015-03-20" required>
+  </label>
+
+  <label>Data da aplicação:
+    <input type="date" id="aplicacao" name="aplicacao" value="2023-11-20" required>
+  </label>
+
+  <div id="idade"></div>
+
+  <!-- Subtestes -->
+  <h3>Subtestes (valores entre 0 e 19)</h3>
+  
+  <label>Cubos (CB):
+    <input type="number" name="CB" min="0" max="19" value="4" required>
+  </label>
+
+  <label>Semelhanças (SM):
+    <input type="number" name="SM" min="0" max="19" value="6" required>
+  </label>
+
+  <label>Dígitos (DG):
+    <input type="number" name="DG" min="0" max="19" value="8" required>
+  </label>
+
+  <label>Conceitos Figurativos (CN):
+    <input type="number" name="CN" min="0" max="19" value="11" required>
+  </label>
+
+  <label>Código (CD):
+    <input type="number" name="CD" min="0" max="19" value="6" required>
+  </label>
+
+  <label>Seq de Num e Letras (SNL):
+    <input type="number" name="SNL" min="0" max="19" value="10" required>
+  </label>
+
+  <label>Raciocínio Matricial (RM):
+    <input type="number" name="RM" min="0" max="19" value="5" required>
+  </label>
+
+  <label>Compreensão (CO):
+    <input type="number" name="CO" min="0" max="19" value="10" required>
+  </label>
+
+  <label>Procurar Símbolos (PS):
+    <input type="number" name="PS" min="0" max="19" value="9" required>
+  </label>
+
+  <label>Completar Figuras (CF):
+    <input type="number" name="CF" min="0" max="19">
+  </label>
+
+  <label>Cancelamento (CA):
+    <input type="number" name="CA" min="0" max="19">
+  </label>
+
+  <label>Informação (IN):
+    <input type="number" name="IN" min="0" max="19">
+  </label>
+
+  <label>Aritmética (AR):
+    <input type="number" name="AR" min="0" max="19">
+  </label>
+
+  <label>Raciocínio com Palavras (RP):
+    <input type="number" name="RP" min="0" max="19">
+  </label>
+
+  <!-- Botão para calcular os resultados -->
+  <br><br>
+  <button type="button" onclick="calcularResultados()">Calcular Resultados</button>
+
+</form>
+
+<!-- Referência ao script externo -->
+<script src="script.js"></script>
+
+</body>
+</html>
