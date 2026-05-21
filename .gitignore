@@ -1,6 +1,23 @@
-**venv
 **/venv
 **__pycache__
 ex1.pdf
 ex2.pdf
 
+__pycache__/
+*.py[cod]
+
+venv/
+.venv/
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+build/
+dist/
+*.egg-info/
+
+.env
+
+.vscode/
+.idea/
