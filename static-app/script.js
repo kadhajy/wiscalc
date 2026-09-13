@@ -201,7 +201,13 @@ async function corrigiTeste(dForm) {
 
 // ---------- RENDERIZAÇÃO DA PÁGINA ----------
 
+let ultimoPP = null;
+let ultimosDados = null;
+
 function renderizaResultado(pp, dados) {
+  ultimoPP = pp;
+  ultimosDados = dados;
+
   document.getElementById("r-nome").textContent = dados["nome"];
   document.getElementById("r-nascimento").textContent = dados["nascimento"];
   document.getElementById("r-data-apli").textContent = dados["data_apli"];
@@ -247,6 +253,202 @@ function renderizaResultado(pp, dados) {
   }
 }
 
+// ---------- RELATÓRIO PDF (IMPRESSÃO) ----------
+
+function montaHtmlRelatorio(pp, dados) {
+  const linhasSubtestes = SUBTESTES.map((coluna) => `
+    <tr>
+      <td>${LABELS_SUBTESTES[coluna]}</td>
+      <td>${dados[coluna] ?? ""}</td>
+      <td>${pp[coluna] ?? ""}</td>
+    </tr>
+  `).join("");
+
+  const linhasSomas = ["ICV", "IOP", "IMO", "IVP", "total"].map((esc) => `
+    <tr><td><strong>${esc === "total" ? "QIT" : esc}</strong></td><td>${pp[esc]}</td></tr>
+  `).join("");
+
+  const linhasPc = ["icv", "iop", "imo", "ivp", "qit"].map((escala) => {
+    const escalaUpper = escala.toUpperCase();
+    const pc = pp["pc"]["pc_" + escala];
+    const somaPp = escala === "qit" ? pp["total"] : pp[escalaUpper];
+    const rotulo = escala === "qit" ? "QI Total" : escalaUpper;
+    return `
+      <tr>
+        <td>${rotulo}</td>
+        <td>${somaPp}</td>
+        <td>${escalaUpper} ${pc ? pc[escalaUpper] : ""}</td>
+        <td>${pc ? pc["rank_p"] : ""}</td>
+        <td>${pc ? pc["nc95"] : ""}</td>
+      </tr>
+    `;
+  }).join("");
+
+  const geradoEm = new Date().toLocaleString("pt-BR");
+
+  return `
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Relatório WISC-IV - ${dados["nome"]}</title>
+<style>
+  :root {
+    --brand: #3f51b5;
+    --brand-dark: #2c3a94;
+    --brand-light: #eef0fb;
+    --texto: #212529;
+    --borda: #ccced9;
+  }
+
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; color-adjust: exact; box-sizing: border-box; }
+
+  body {
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    color: var(--texto);
+    margin: 0;
+    padding: 0 2.2cm 2cm;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .cabecalho {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    background: var(--brand);
+    color: #fff;
+    margin: 0 -2.2cm 1.5rem;
+    padding: 1.1rem 2.2cm;
+  }
+
+  .cabecalho .icone { font-size: 1.8rem; line-height: 1; }
+  .cabecalho h1 { font-size: 1.3rem; margin: 0; letter-spacing: .02em; }
+  .cabecalho p { margin: .15rem 0 0; font-size: .8rem; opacity: .85; }
+
+  .gerado-em {
+    text-align: right;
+    font-size: .75rem;
+    color: #777;
+    margin: -.8rem 0 1.2rem;
+  }
+
+  h2 {
+    font-size: .95rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--brand-dark);
+    margin: 1.6rem 0 .6rem;
+    padding-bottom: .3rem;
+    border-bottom: 2px solid var(--brand-light);
+  }
+
+  table { width: 100%; border-collapse: collapse; margin-bottom: .5rem; }
+  th, td { border: 1px solid var(--borda) !important; padding: .45rem .65rem; text-align: center; }
+  td:first-child, th:first-child { text-align: left; }
+
+  thead th {
+    background: var(--brand-dark) !important;
+    color: #fff;
+    font-weight: 600;
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+  }
+
+  tbody tr:nth-child(even) { background: var(--brand-light) !important; }
+  tr.total td { background: #dde0f5 !important; font-weight: 700; }
+
+  tr, td, th { page-break-inside: avoid; }
+
+  .identificacao { border-collapse: collapse; }
+  .identificacao td {
+    text-align: left;
+    border: none !important;
+    padding: .25rem 0;
+    background: transparent !important;
+    font-size: .95rem;
+  }
+  .identificacao td strong { color: var(--brand-dark); }
+
+  @media print {
+    body { padding: 0 1.5cm 1.5cm; }
+    .cabecalho { margin: 0 -1.5cm 1.5rem; padding: 1rem 1.5cm; }
+  }
+</style>
+</head>
+<body>
+  <div class="cabecalho">
+    <span class="icone">🧠</span>
+    <div>
+      <h1>Relatório WISC-IV</h1>
+      <p>Escala de Inteligência Wechsler para Crianças</p>
+    </div>
+  </div>
+
+  <p class="gerado-em">Gerado em ${geradoEm}</p>
+
+  <h2>Identificação</h2>
+  <table class="identificacao">
+    <tr><td><strong>Nome:</strong> ${dados["nome"]}</td></tr>
+    <tr><td><strong>Data de nascimento:</strong> ${dados["nascimento"]}</td></tr>
+    <tr><td><strong>Data de avaliação:</strong> ${dados["data_apli"]}</td></tr>
+    <tr><td><strong>Idade na aplicação:</strong> ${pp["anos_meses"]}</td></tr>
+  </table>
+
+  <h2>Subtestes</h2>
+  <table>
+    <thead>
+      <tr><th>Subteste</th><th>Pontos Brutos</th><th>Pontos Ponderados</th></tr>
+    </thead>
+    <tbody>
+      ${linhasSubtestes}
+      <tr class="total"><td>Soma dos Pontos Ponderados</td><td></td><td>${pp["total"]}</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Soma dos Pontos Ponderados</h2>
+  <table><tbody>${linhasSomas}</tbody></table>
+
+  <h2>Conversão em Ponto Composto</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Escala</th>
+        <th>Soma dos PP</th>
+        <th>Ponto Composto</th>
+        <th>Rank Percentil</th>
+        <th>Intervalo de Confiança 95%</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${linhasPc}
+    </tbody>
+  </table>
+
+  <script>
+    window.onload = () => window.print();
+  </script>
+</body>
+</html>
+`;
+}
+
+function geraRelatorioPdf() {
+  if (!ultimoPP || !ultimosDados) return;
+
+  const janela = window.open("", "_blank");
+  if (!janela) {
+    mostraErro("Não foi possível abrir a aba do relatório. Verifique o bloqueador de pop-ups do navegador.");
+    return;
+  }
+
+  janela.document.write(montaHtmlRelatorio(ultimoPP, ultimosDados));
+  janela.document.close();
+}
+
+// ---------- FIM RELATÓRIO PDF ----------
+
 function mostraErro(mensagem) {
   const caixaErro = document.getElementById("erro");
   caixaErro.textContent = mensagem;
@@ -272,6 +474,10 @@ document.getElementById("form-wisc").addEventListener("submit", async (evento) =
   } catch (erro) {
     mostraErro(erro.message);
   }
+});
+
+document.getElementById("btn-relatorio-pdf").addEventListener("click", () => {
+  geraRelatorioPdf();
 });
 
 document.getElementById("btn-novo-calculo").addEventListener("click", () => {
