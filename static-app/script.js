@@ -410,13 +410,13 @@ function montaHtmlRelatorio(pp, dados) {
   <h2>Soma dos Pontos Ponderados</h2>
   <table><tbody>${linhasSomas}</tbody></table>
 
-  <h2>Conversão em Ponto Composto</h2>
+  <h2>Conversão em Pontos Compostos</h2>
   <table>
     <thead>
       <tr>
         <th>Escala</th>
         <th>Soma dos PP</th>
-        <th>Ponto Composto</th>
+        <th>Pontos Compostos</th>
         <th>Rank Percentil</th>
         <th>Intervalo de Confiança 95%</th>
       </tr>
